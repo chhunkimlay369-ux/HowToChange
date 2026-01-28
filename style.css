@@ -1,14 +1,26 @@
-/* style.css */
-
-/* Google Font */
+/* =========================
+   Google Font
+   ========================= */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 
-/* Body and container */
-body {
-  font-family: 'Poppins', sans-serif;
-  background: #fdf8f3; /* creamy soap background */
-  padding: 20px;
+/* =========================
+   Reset & Base
+   ========================= */
+* {
+  box-sizing: border-box;
 }
+
+body {
+  margin: 0;
+  padding: 20px;
+  font-family: 'Poppins', sans-serif;
+  background: #fdf8f3;
+  color: #4e342e;
+}
+
+/* =========================
+   Container
+   ========================= */
 .container {
   max-width: 950px;
   margin: auto;
@@ -16,49 +28,28 @@ body {
   padding: 30px;
   border-radius: 20px;
   box-shadow: 0 8px 25px rgba(0,0,0,0.1);
-  animation: fadeIn 0.8s ease-out;
 }
 
-/* Heading */
+/* =========================
+   Heading
+   ========================= */
 h1 {
   text-align: center;
-  margin-bottom: 25px;
-  color: #6d4c41; /* warm brown for natural look */
+  margin-bottom: 24px;
+  color: #6d4c41;
   font-weight: 600;
-  animation: bounce 1s ease-out;
 }
 
-/* Sections */
+/* =========================
+   Sections
+   ========================= */
 .section {
-  margin-bottom: 20px;
+  margin-bottom: 24px;
 }
 
-/* Checkbox labels - Oils */
-label {
-  display: flex;
-  align-items: center;
-  padding: 12px 14px;
-  margin: 5px;
-  border-radius: 14px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  font-weight: 500;
-  box-shadow: 0 3px 6px rgba(0,0,0,0.08);
-  color: #4e342e;
-  background: linear-gradient(145deg, #fffbea, #f5f0e6); /* soft cream gradient */
-}
-label:hover {
-  transform: scale(1.05) rotate(-1deg);
-  box-shadow: 0 8px 15px rgba(0,0,0,0.15);
-}
-
-/* Face-safe oils */
-.face-safe {
-  border: 2px solid #81c784; /* green outline for safe oils */
-  background: linear-gradient(145deg, #e8f5e9, #dcedc8); /* green pastel gradient */
-}
-
-/* Grid for oils & fragrances */
+/* =========================
+   Grid (Desktop)
+   ========================= */
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
@@ -68,74 +59,168 @@ label:hover {
   padding: 8px;
   border-radius: 14px;
   background: #fffdf8;
-  animation: fadeInUp 0.6s ease forwards;
   border: 1px solid #eee;
 }
 
-/* Input & select styling */
-input[type="number"], select {
+/* =========================
+   Labels (checkbox / radio)
+   ========================= */
+label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  cursor: pointer;
+  font-weight: 500;
+  background: linear-gradient(145deg, #fffbea, #f5f0e6);
+  box-shadow: 0 3px 6px rgba(0,0,0,0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+label:hover {
+  transform: scale(1.04);
+  box-shadow: 0 8px 15px rgba(0,0,0,0.15);
+}
+
+/* Face-safe oils */
+.face-safe {
+  border: 2px solid #81c784;
+  background: linear-gradient(145deg, #e8f5e9, #dcedc8);
+}
+
+/* =========================
+   Inputs & Select
+   ========================= */
+input[type="number"],
+select {
   width: 60%;
   padding: 10px;
-  margin-right: 5px;
   border-radius: 8px;
   border: 1px solid #ccc;
-  transition: all 0.3s ease;
+  font-size: 15px;
+  transition: border 0.2s ease, box-shadow 0.2s ease;
 }
-input[type="number"]:focus, select:focus {
+
+/* Force scroll for long select lists (desktop + Android) */
+select {
+  max-height: 220px;
+  overflow-y: auto;
+}
+
+input[type="number"]:focus,
+select:focus {
   border-color: #81c784;
-  box-shadow: 0 0 8px rgba(129,199,132,0.4);
+  box-shadow: 0 0 6px rgba(129,199,132,0.4);
   outline: none;
 }
 
-/* Button */
+/* =========================
+   Buttons
+   ========================= */
 button {
   padding: 14px 24px;
-  background: #81c784; /* natural green */
+  background: #81c784;
   color: #fff;
   border: none;
-  border-radius: 12px;
+  border-radius: 14px;
   cursor: pointer;
   font-weight: 600;
   font-size: 16px;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-}
-button:hover {
-  background: #66bb6a;
-  transform: scale(1.05) rotate(-1deg);
-  box-shadow: 0 8px 18px rgba(0,0,0,0.15);
+  transition: background 0.2s ease, transform 0.2s ease;
 }
 
-/* Result box */
+button:hover {
+  background: #66bb6a;
+  transform: scale(1.05);
+}
+
+/* =========================
+   Result & Warning
+   ========================= */
 .result {
   background: #fff8e1;
   padding: 20px;
   border-radius: 14px;
-  margin-top: 15px;
-  box-shadow: inset 0 0 10px rgba(0,0,0,0.03);
-  animation: fadeIn 0.5s ease forwards;
-  color: #4e342e;
+  margin-top: 16px;
   font-weight: 500;
 }
 
-/* Warning box */
 .warning {
+  margin-top: 10px;
   color: #d32f2f;
   font-weight: bold;
-  margin-top: 10px;
 }
 
-/* Animations */
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+/* =========================
+   MOBILE UX (CRITICAL)
+   ========================= */
+@media (max-width: 768px) {
+
+  body {
+    padding: 10px;
+  }
+
+  .container {
+    padding: 16px;
+    border-radius: 14px;
+    box-shadow: none;
+  }
+
+  h1 {
+    font-size: 20px;
+    margin-bottom: 16px;
+  }
+
+  /* Mobile = vertical cards (no dense grid) */
+ .grid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-height: 80vh;          /* set a viewport-based max height */
+  overflow-y: auto;          /* vertical scroll */
+  -webkit-overflow-scrolling: touch; /* smooth scrolling on iOS */
+  padding: 0;
+  border: none;
+  background: transparent;
 }
-@keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(15px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-@keyframes bounce {
-  0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-  40% { transform: translateY(-12px); }
-  60% { transform: translateY(-6px); }
+
+  label {
+    padding: 16px;
+    font-size: 15px;
+    border-radius: 16px;
+  }
+
+  label:hover {
+    transform: none;
+    box-shadow: none;
+  }
+
+  input[type="checkbox"],
+  input[type="radio"] {
+    transform: scale(1.25);
+  }
+
+  /* iOS zoom fix + better scroll */
+  input[type="number"],
+  select {
+    width: 100%;
+    padding: 14px;
+    font-size: 16px;
+    border-radius: 12px;
+  }
+
+  button {
+    width: 100%;
+    padding: 16px;
+    font-size: 16px;
+    border-radius: 16px;
+    margin-top: 12px;
+  }
+
+  .result {
+    padding: 16px;
+    font-size: 15px;
+  }
+  
 }
