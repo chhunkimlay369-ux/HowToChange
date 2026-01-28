@@ -1,4 +1,3 @@
-
 // Oils with face-safe property
 const oils = [
   {name:"Olive Oil", sap:0.134, faceSafe:true}, {name:"Coconut Oil", sap:0.183, faceSafe:false}, {name:"Palm Oil", sap:0.141, faceSafe:false},
@@ -22,37 +21,62 @@ const fragrances = [
   "Myrrh","Tea","Coffee","Coconut","Chocolate","Strawberry","Apple","Mango","Peach","None"
 ];
 
-// Create oil and fragrance grids
+// Populate oil list
 const oilList = document.getElementById("oilList");
-oils.forEach((oil,i)=>{
-  let className = oil.faceSafe ? "face-safe" : "";
+oils.forEach((oil, i) => {
+  let className = oil.faceSafe ? "face-safe" : "non-face-safe";
   oilList.innerHTML += `<label class="${className}"><input type="checkbox" value="${i}"> ${oil.name}</label>`;
 });
 
+// Populate fragrance list
 const fragranceList = document.getElementById("fragranceList");
-fragrances.forEach((fragrance,i)=>{
+fragrances.forEach((fragrance, i) => {
   fragranceList.innerHTML += `<label><input type="checkbox" value="${i}"> ${fragrance}</label>`;
 });
 
-// Generate function
+// Enforce face-safe oils dynamically
+document.querySelectorAll('input[name="soapType"]').forEach(radio => {
+  radio.addEventListener('change', () => {
+    const soapType = document.querySelector('input[name="soapType"]:checked').value;
+    document.querySelectorAll('#oilList label').forEach(label => {
+      const idx = label.querySelector('input').value;
+      if((soapType === 'face' || soapType === 'both') && !oils[idx].faceSafe) {
+        label.style.display = 'none'; // hide unsafe oils
+        label.querySelector('input').checked = false; // uncheck if previously selected
+      } else {
+        label.style.display = 'block';
+      }
+    });
+  });
+});
+
+// Generate soap recipe
 function generate() {
   let amount = parseFloat(document.getElementById("amount").value);
   const unit = document.getElementById("unit").value;
-  if (!amount || amount <= 0) return alert("Enter valid soap amount");
+  if (!amount || amount <= 0) return alert("Enter a valid soap amount");
 
   if(unit==="kg") amount *=1000;
   if(unit==="bar") amount *=100;
 
   const soapType = document.querySelector('input[name="soapType"]:checked').value;
-  let superfat = (soapType === "face") ? 0.08 : 0.05;
-  let fragrancePercent = (soapType === "face") ? 0.015 : 0.025;
+  let superfat = (soapType === "face" || soapType === "both") ? 0.08 : 0.05;
+  let fragrancePercent = (soapType === "face" || soapType === "both") ? 0.015 : 0.025;
 
   const selectedOils = [...document.querySelectorAll('#oilList input:checked')];
-  if(selectedOils.length===0) return alert("Select at least one oil");
+  if(selectedOils.length === 0) return alert("Select at least one oil");
+
+  // Extra safety check (in case JS disabled hiding)
+  if(soapType === "face" || soapType === "both") {
+    const invalidOils = selectedOils.filter(box => !oils[box.value].faceSafe);
+    if(invalidOils.length > 0) {
+      return alert("⚠️ Some selected oils are NOT safe for face soap!");
+    }
+  }
 
   const oilWeight = amount / selectedOils.length;
   let lye = 0, oilText = "";
-  selectedOils.forEach(box=>{
+  selectedOils.forEach(box => {
     const oil = oils[box.value];
     lye += oilWeight * oil.sap;
     oilText += `${oil.name}: ${oilWeight.toFixed(1)} g<br>`;
@@ -60,16 +84,18 @@ function generate() {
   lye *= (1 - superfat);
   const water = amount * 0.33;
 
+  // Fragrance
   const selectedFragrances = [...document.querySelectorAll('#fragranceList input:checked')];
   let fragranceText = "", fragranceAmount = amount * fragrancePercent;
-  if(selectedFragrances.length>0){
+  if(selectedFragrances.length > 0) {
     const perFragrance = fragranceAmount / selectedFragrances.length;
-    selectedFragrances.forEach(box=>{
+    selectedFragrances.forEach(box => {
       fragranceText += `${fragrances[box.value]}: ${perFragrance.toFixed(1)} g<br>`;
     });
   } else fragranceText = "None";
 
-  document.getElementById("result").innerHTML=`
+  // Display result
+  document.getElementById("result").innerHTML = `
     <strong>Total Soap:</strong> ${amount.toFixed(1)} g<br><br>
     <strong>Oils Used:</strong><br>${oilText}<br>
     <strong>Lye (NaOH):</strong> ${lye.toFixed(1)} g<br>
@@ -80,7 +106,7 @@ function generate() {
   `;
 }
 
-// Clear function
+// Clear form
 function clearForm() {
   document.getElementById("amount").value = "";
   document.getElementById("unit").value = "g";
@@ -88,4 +114,7 @@ function clearForm() {
   document.querySelectorAll('#oilList input').forEach(box => box.checked = false);
   document.querySelectorAll('#fragranceList input').forEach(box => box.checked = false);
   document.getElementById("result").innerHTML = "No calculation yet.";
+
+  // Reset oil visibility
+  document.querySelectorAll('#oilList label').forEach(label => label.style.display = 'block');
 }
