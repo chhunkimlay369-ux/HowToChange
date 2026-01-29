@@ -3,74 +3,150 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Safe Face & Body Soap Calculator</title>
+<title>Safe Soap Calculator</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <div class="container">
-  <h1>🧼 Safe Face & Body Soap Calculator</h1>
+  <h1>🧼 Safe Soap Calculator</h1>
 
-  <!-- Soap Amount -->
+  Name: <input type="text" id="name1" placeholder="Enter your name">
+
+  <!-- Toggle Buttons -->
+  <div class="toggle-buttons">
+    <button class="toggle active" onclick="showProcess('hot', event)">Hot Process</button>
+    <button class="toggle" onclick="showProcess('cold', event)">Cold Process</button>
+    <button class="toggle" onclick="showProcess('melt', event)">Melt & Pour</button>
+  </div>
+
+  <div class="process-content">
+
+    <!-- Hot Process -->
+    <div id="hot" class="process active">
+      <h2>Hot Process</h2>
+      <p>????</p>
+    </div>
+
+    <!-- Cold Process -->
+    <div id="cold" class="process">
+      <div class="section">
+        <h2>Cold Process Soap Calculator</h12>
+        <h3>Enter Soap Amount</h3>
+        soap : <input type="number" id="amount" placeholder="Example: 1"><br>
+        Unit : <select id="unit">
+          <option value="g">grams</option>
+          <option value="kg">kilograms</option>
+          <option value="bar">bars (1 bar = 100g)</option>
+        </select>
+      </div>
+
+      <div class="section">
+        <h3>Select Soap Type</h3>
+        <label><input type="radio" name="soapType" value="face" checked> Face Soap</label>
+        <label><input type="radio" name="soapType" value="body"> Body Soap</label>
+        <label><input type="radio" name="soapType" value="both"> Face & Body Soap</label>
+      </div>
+
+      <div class="section">
+        <h3>Select Oils</h3>
+        <div class="grid-wrapper">
+          <div class="grid" id="oilList"></div>
+        </div>
+      </div>
+
+      <div class="section">
+        <h3>Select Fragrance(s)</h3>
+        <div class="grid-wrapper">
+          <div class="grid" id="fragranceList"></div>
+        </div>
+      </div>
+
+      <div class="section button-row">
+        <button id="generateBtn" onclick="generate()">Generate Recipe</button>
+        <button id="clearBtn" onclick="clearForm()">Clear</button>
+      </div>
+
+      <div class="section">
+        <h3>
+          Essential Ingredients
+          <button class="copy-btn" onclick="copyResult()" title="Copy recipe">
+            <p id="btncopy"> 📋</p>
+          </button>
+        </h3>
+        <div class="result" id="result">No calculation yet.</div>
+      </div>
+
+      <div class="section warning">
+        ⚠️ Safety Rules:
+        <ul>
+          <li>Select at least one oil</li>
+          <li>Always wear gloves & goggles</li>
+          <li>Add lye to water, not water to lye</li>
+          <li>Test small batches first</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Melt & Pour -->
+   <!-- Melt & Pour -->
+<div id="melt" class="process">
+  <h2>Melt & Pour Soap Calculator</h2>
+
   <div class="section">
-    <h3>Enter Soap Amount</h3>
-    <input type="number" id="amount" placeholder="Example: 1">
-    <select id="unit">
+    <h3>Enter Soap Base Amount</h3>
+    Amount: <input type="number" id="meltAmount" placeholder="Example: 100"><br>
+    Unit: <select id="meltUnit">
       <option value="g">grams</option>
       <option value="kg">kilograms</option>
       <option value="bar">bars (1 bar = 100g)</option>
     </select>
   </div>
 
-  <!-- Soap Type -->
   <div class="section">
     <h3>Select Soap Type</h3>
-    <label><input type="radio" name="soapType" value="face" checked> Face Soap (Sensitive Skin)</label>
-    <label><input type="radio" name="soapType" value="body"> Body Soap</label>
-    <label><input type="radio" name="soapType" value="both"> Face & Body Soap</label>
+    <label><input type="radio" name="meltSoapType" value="face" checked> Face Soap</label>
+    <label><input type="radio" name="meltSoapType" value="body"> Body Soap</label>
+    <label><input type="radio" name="meltSoapType" value="both"> Face & Body Soap</label>
   </div>
 
-  <!-- Oils -->
   <div class="section">
-    <h3>Select Oils</h3>
-    <div class="grid-wrapper">
-      <div class="grid" id="oilList"></div>
-    </div>
+    <h3>Select Add-in Oils (Optional)</h3>
+    <div class="grid" id="meltOilList"></div>
   </div>
 
-  <!-- Fragrances -->
   <div class="section">
-    <h3>Select Fragrance(s)</h3>
-    <div class="grid-wrapper">
-      <div class="grid" id="fragranceList"></div>
-    </div>
+    <h3>Select Fragrances</h3>
+    <div class="grid" id="meltFragranceList"></div>
   </div>
 
-  <!-- Buttons -->
   <div class="section button-row">
-    <button id="generateBtn" onclick="generate()">Generate Recipe</button>
-    <button id="clearBtn" onclick="clearForm()">Clear</button>
+    <button onclick="generateMelt()">Generate Recipe</button>
+    <button onclick="clearMeltForm()">Clear</button>
   </div>
 
-  <!-- Result -->
   <div class="section">
-    <h3>Essential Ingredients</h3>
-    <div class="result" id="result">No calculation yet.</div>
+    <h3>
+      Melt & Pour Ingredients
+      <button class="copy-btn" onclick="copyMeltResult()" title="Copy recipe"> 📋 </button>
+    </h3>
+    <div class="result" id="meltResult">No calculation yet.</div>
   </div>
 
-  <!-- Warnings -->
   <div class="section warning">
     ⚠️ Safety Rules:
     <ul>
-      <li>Select at least one oil</li>
-      <li>Always wear gloves & goggles</li>
-      <li>Add lye to water, not water to lye</li>
+      <li>Keep oils ≤5% of base weight</li>
+      <li>Essential oils ≤1–2%</li>
+      <li>Face soap oils must be face-safe</li>
       <li>Test small batches first</li>
+      <li>Use heat-safe container for melting</li>
     </ul>
   </div>
 </div>
 
-<script src="javascript.js"></script>
+</div>
 
+<script src="javascript.js"></script>
 </body>
 </html>
