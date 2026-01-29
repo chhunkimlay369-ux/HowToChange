@@ -11,8 +11,8 @@
 <div class="container">
   <h1>🧼 Safe Soap Calculator</h1>
 
-  Name: <input type="text" id="name1" placeholder="Enter your name">
-
+  Name: <input type="text" id="name1" placeholder="Enter your name"><br>
+  
   <!-- Toggle Buttons -->
   <div class="toggle-buttons">
     <button class="toggle active" onclick="showProcess('hot', event)">Hot Process</button>
@@ -31,14 +31,18 @@
     <!-- Cold Process -->
     <div id="cold" class="process">
       <div class="section">
-        <h2>Cold Process Soap Calculator</h12>
+        <h2>Cold Process Soap Calculator</h2>
         <h3>Enter Soap Amount</h3>
+         
         soap : <input type="number" id="amount" placeholder="Example: 1"><br>
-        Unit : <select id="unit">
+        Unit : <select id="unit"><br>     
           <option value="g">grams</option>
           <option value="kg">kilograms</option>
           <option value="bar">bars (1 bar = 100g)</option>
         </select>
+        Search_oils: <input type="text" id="searchZZ" placeholder="Search oils " oninput="searchColdOils()" ><br>
+        Search_fragrances: <input type="text" id="searchInput2" placeholder="Search fragrances" oninput="searchColdFragrances()" ><br>
+
       </div>
 
       <div class="section">
@@ -100,7 +104,9 @@
       <option value="g">grams</option>
       <option value="kg">kilograms</option>
       <option value="bar">bars (1 bar = 100g)</option>
-    </select>
+    </select><br>
+    Search_oils: <input type="text" id="searchZZMelt" placeholder="Search oils" oninput="searchMeltOils()"><br>
+    Search_fragrances: <input type="text" id="searchInput2Melt" placeholder="Search fragrances" oninput="searchMeltFragrances()"><br>
   </div>
 
   <div class="section">
@@ -111,7 +117,7 @@
   </div>
 
   <div class="section">
-    
+    <h3>Select Oils (Optional)</h3>
     <div class="grid" id="meltOilList"></div>
   </div>
 
@@ -121,14 +127,16 @@
   </div>
 
   <div class="section button-row">
-    <button onclick="generateMelt()">Generate Recipe</button>
-    <button onclick="clearMeltForm()">Clear</button>
+    <button id="generateMeltBtn" onclick="generateMelt()">Generate Recipe</button>
+    <button id="clearMeltBtn" onclick="clearMeltForm()">Clear</button>
   </div>
 
   <div class="section">
     <h3>
       Melt & Pour Ingredients
-      <button class="copy-btn" onclick="copyMeltResult()" title="Copy recipe"> 📋 </button>
+      <button class="copy-btn" onclick="copyMeltResult()" title="Copy recipe">
+        <p id="meltBtnCopy"> 📋</p>
+      </button>
     </h3>
     <div class="result" id="meltResult">No calculation yet.</div>
   </div>
