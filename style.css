@@ -14,8 +14,8 @@ body {
   margin: 0;
   padding: 20px;
   font-family: 'Poppins', sans-serif;
-  background: #fdf8f3;
-  color: #4e342e;
+  background: #001e26; /* dark navy */
+  color: #f2d492; /* sandy beige */
 }
 
 /* =========================
@@ -24,10 +24,11 @@ body {
 .container {
   max-width: 950px;
   margin: auto;
-  background: #fff9f4;
+  background: #005f6a; /* deep teal */
   padding: 30px;
   border-radius: 20px;
-  box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+  color: #f2d492;
 }
 
 /* =========================
@@ -36,7 +37,7 @@ body {
 h1 {
   text-align: center;
   margin-bottom: 24px;
-  color: #6d4c41;
+  color: #e07b00; /* golden orange */
   font-weight: 600;
 }
 
@@ -58,8 +59,9 @@ h1 {
   overflow-y: auto;
   padding: 8px;
   border-radius: 14px;
-  background: #fffdf8;
-  border: 1px solid #eee;
+  background: #f2d492; /* light sandy */
+  border: 1px solid #e07b00; /* golden orange */
+  color: #001e26; /* dark navy for text */
 }
 
 /* =========================
@@ -73,33 +75,37 @@ label {
   border-radius: 14px;
   cursor: pointer;
   font-weight: 500;
-  background: linear-gradient(145deg, #fffbea, #f5f0e6);
-  box-shadow: 0 3px 6px rgba(0,0,0,0.08);
+  background: linear-gradient(145deg, #f2d492, #e07b00); /* sandy to golden */
+  box-shadow: 0 3px 6px rgba(157,44,38,0.8); /* brick red shadow */
+  color: #001e26; /* dark navy */
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 label:hover {
   transform: scale(1.04);
-  box-shadow: 0 8px 15px rgba(0,0,0,0.15);
+  box-shadow: 0 8px 15px rgba(157,44,38,0.9);
 }
 
 /* Face-safe oils */
 .face-safe {
-  border: 2px solid #81c784;
-  background: linear-gradient(145deg, #e8f5e9, #dcedc8);
+  border: 2px solid #00a9a5; /* light aqua */
+  background: linear-gradient(145deg, #00a9a5, #008891); /* turquoise to aqua */
+  color: #001e26;
 }
 
 /* =========================
    Inputs & Select
    ========================= */
-input[type="number"],
+input[type="number"], input[type="text"],
 select {
   width: 60%;
   padding: 10px;
   border-radius: 8px;
-  border: 1px solid #ccc;
+  border: 1px solid #c9b078; /* subtle sand border */
   font-size: 15px;
   transition: border 0.2s ease, box-shadow 0.2s ease;
+  background: #f7f3e9; /* very light sand */
+  color: #001e26;
 }
 
 /* Force scroll for long select lists (desktop + Android) */
@@ -110,9 +116,11 @@ select {
 
 input[type="number"]:focus,
 select:focus {
-  border-color: #81c784;
-  box-shadow: 0 0 6px rgba(129,199,132,0.4);
+  border-color: #00a9a5; /* light aqua */
+  box-shadow: 0 0 6px rgba(0,169,165,0.4);
   outline: none;
+  background: #e9f0ef;
+  color: #001e26;
 }
 
 /* =========================
@@ -120,35 +128,39 @@ select:focus {
    ========================= */
 button {
   padding: 14px 24px;
-  background: #81c784;
-  color: #fff;
+  background: #008891; /* turquoise */
+  color: #f2d492; /* sandy beige */
   border: none;
   border-radius: 14px;
   cursor: pointer;
   font-weight: 600;
   font-size: 16px;
   transition: background 0.2s ease, transform 0.2s ease;
+  box-shadow: 0 4px 8px rgba(0,137,145,0.6);
 }
 
 button:hover {
-  background: #66bb6a;
+  background: #00a9a5; /* light aqua */
   transform: scale(1.05);
+  box-shadow: 0 6px 12px rgba(0,169,165,0.8);
 }
 
 /* =========================
    Result & Warning
    ========================= */
 .result {
-  background: #fff8e1;
+  background: #e07b00; /* golden orange */
   padding: 20px;
   border-radius: 14px;
   margin-top: 16px;
   font-weight: 500;
+  color: #001e26; /* dark text */
+  box-shadow: 0 4px 10px rgba(224,123,0,0.5);
 }
 
 .warning {
   margin-top: 10px;
-  color: #d32f2f;
+  color: #9d2c26; /* brick red */
   font-weight: bold;
 }
 
@@ -173,22 +185,26 @@ button:hover {
   }
 
   /* Mobile = vertical cards (no dense grid) */
- .grid {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  max-height: 80vh;          /* set a viewport-based max height */
-  overflow-y: auto;          /* vertical scroll */
-  -webkit-overflow-scrolling: touch; /* smooth scrolling on iOS */
-  padding: 0;
-  border: none;
-  background: transparent;
-}
+  .grid {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-height: 80vh;          /* set a viewport-based max height */
+    overflow-y: auto;          /* vertical scroll */
+    -webkit-overflow-scrolling: touch; /* smooth scrolling on iOS */
+    padding: 0;
+    border: none;
+    background: transparent;
+    color: #001e26;
+  }
 
   label {
     padding: 16px;
     font-size: 15px;
     border-radius: 16px;
+    background: linear-gradient(145deg, #f2d492, #e07b00);
+    box-shadow: 0 3px 6px rgba(157,44,38,0.8);
+    color: #001e26;
   }
 
   label:hover {
@@ -208,6 +224,8 @@ button:hover {
     padding: 14px;
     font-size: 16px;
     border-radius: 12px;
+    background: #f7f3e9;
+    color: #001e26;
   }
 
   button {
@@ -223,4 +241,84 @@ button:hover {
     font-size: 15px;
   }
   
+}
+
+/* Copy button */
+.copy-btn {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  font-size: 18px;
+  margin-left: 5px;
+  color: #00a9a5;
+  transition: transform 0.2s ease;
+}
+
+.copy-btn:hover {
+  transform: scale(1.1);
+}
+
+/* Toggle Buttons */
+.toggle-buttons {
+  display: flex;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.toggle {
+  padding: 10px 20px;
+  border: 1px solid #e07b00;
+  background: #f2d492;
+  cursor: pointer;
+  border-radius: 6px;
+  color: #001e26;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.toggle.active {
+  background: #c55a11; /* burnt orange */
+  color: #f2d492;
+  font-weight: bold;
+  border-color: #c55a11;
+}
+
+/* Process Section */
+.process {
+  display: none;
+  padding: 15px;
+  border: 1px solid #e07b00;
+  border-radius: 6px;
+  margin-top: 10px;
+  background: #f2d492;
+  color: #001e26;
+}
+
+.process.active {
+  display: block;
+}
+/* Scrollbar for WebKit browsers */
+.grid::-webkit-scrollbar {
+  width: 12px;
+}
+
+.grid::-webkit-scrollbar-track {
+  background: #f0e2be; /* Pale beige from Ocean Sunset */
+  border-radius: 14px;
+}
+
+.grid::-webkit-scrollbar-thumb {
+  background: #141414; /* Burnt orange */
+  border-radius: 14px;
+  border: 3px solid #f0e2be; /* Padding around thumb */
+  transition: background-color 0.3s ease;
+}
+
+.grid::-webkit-scrollbar-thumb:hover {
+  background: #e59221; /* Brighter orange */
+}
+
+/* Scrollbar for Firefox */
+.grid {
+  scrollbar-width: thin;
+  scrollbar-color: #201a13 #f0e2be; /* thumb and track */
 }
