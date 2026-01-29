@@ -1,11 +1,5 @@
-/* =========================
-   Google Font
-   ========================= */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 
-/* =========================
-   Reset & Base
-   ========================= */
 * {
   box-sizing: border-box;
 }
@@ -14,43 +8,31 @@ body {
   margin: 0;
   padding: 20px;
   font-family: 'Poppins', sans-serif;
-  background: #001e26; /* dark navy */
-  color: #f2d492; /* sandy beige */
+  background: #001e26;
+  color: #f2d492;
 }
 
-/* =========================
-   Container
-   ========================= */
 .container {
   max-width: 950px;
   margin: auto;
-  background: #005f6a; /* deep teal */
+  background: #005f6a;
   padding: 30px;
   border-radius: 20px;
   box-shadow: 0 8px 25px rgba(0,0,0,0.5);
   color: #f2d492;
 }
 
-/* =========================
-   Heading
-   ========================= */
 h1 {
   text-align: center;
   margin-bottom: 24px;
-  color: #e07b00; /* golden orange */
+  color: #e07b00;
   font-weight: 600;
 }
 
-/* =========================
-   Sections
-   ========================= */
 .section {
   margin-bottom: 24px;
 }
 
-/* =========================
-   Grid (Desktop)
-   ========================= */
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
@@ -59,14 +41,11 @@ h1 {
   overflow-y: auto;
   padding: 8px;
   border-radius: 14px;
-  background: #f2d492; /* light sandy */
-  border: 1px solid #e07b00; /* golden orange */
-  color: #001e26; /* dark navy for text */
+  background: #f2d492;
+  border: 1px solid #e07b00;
+  color: #001e26;
 }
 
-/* =========================
-   Labels (checkbox / radio)
-   ========================= */
 label {
   display: flex;
   align-items: center;
@@ -75,9 +54,9 @@ label {
   border-radius: 14px;
   cursor: pointer;
   font-weight: 500;
-  background: linear-gradient(145deg, #f2d492, #e07b00); /* sandy to golden */
-  box-shadow: 0 3px 6px rgba(157,44,38,0.8); /* brick red shadow */
-  color: #001e26; /* dark navy */
+  background: linear-gradient(145deg, #f2d492, #e07b00);
+  box-shadow: 0 3px 6px rgba(157,44,38,0.8);
+  color: #001e26;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
@@ -86,50 +65,40 @@ label:hover {
   box-shadow: 0 8px 15px rgba(157,44,38,0.9);
 }
 
-/* Face-safe oils */
 .face-safe {
-  border: 2px solid #00a9a5; /* light aqua */
-  background: linear-gradient(145deg, #00a9a5, #008891); /* turquoise to aqua */
+  border: 2px solid #00a9a5;
+  background: linear-gradient(145deg, #00a9a5, #008891);
   color: #001e26;
 }
 
-/* =========================
-   Inputs & Select
-   ========================= */
-input[type="number"], input[type="text"],
-select {
+input[type="number"], input[type="text"], select {
   width: 60%;
   padding: 10px;
   border-radius: 8px;
-  border: 1px solid #c9b078; /* subtle sand border */
+  border: 1px solid #c9b078;
   font-size: 15px;
   transition: border 0.2s ease, box-shadow 0.2s ease;
-  background: #f7f3e9; /* very light sand */
+  background: #f7f3e9;
   color: #001e26;
 }
 
-/* Force scroll for long select lists (desktop + Android) */
 select {
   max-height: 220px;
   overflow-y: auto;
 }
 
-input[type="number"]:focus,
-select:focus {
-  border-color: #00a9a5; /* light aqua */
+input[type="number"]:focus, select:focus {
+  border-color: #00a9a5;
   box-shadow: 0 0 6px rgba(0,169,165,0.4);
   outline: none;
   background: #e9f0ef;
   color: #001e26;
 }
 
-/* =========================
-   Buttons
-   ========================= */
 button {
   padding: 14px 24px;
-  background: #008891; /* turquoise */
-  color: #f2d492; /* sandy beige */
+  background: #008891;
+  color: #f2d492;
   border: none;
   border-radius: 14px;
   cursor: pointer;
@@ -140,33 +109,27 @@ button {
 }
 
 button:hover {
-  background: #00a9a5; /* light aqua */
+  background: #00a9a5;
   transform: scale(1.05);
   box-shadow: 0 6px 12px rgba(0,169,165,0.8);
 }
 
-/* =========================
-   Result & Warning
-   ========================= */
 .result {
-  background: #e07b00; /* golden orange */
+  background: #e07b00;
   padding: 20px;
   border-radius: 14px;
   margin-top: 16px;
   font-weight: 500;
-  color: #001e26; /* dark text */
+  color: #001e26;
   box-shadow: 0 4px 10px rgba(224,123,0,0.5);
 }
 
 .warning {
   margin-top: 10px;
-  color: #9d2c26; /* brick red */
+  color: #9d2c26;
   font-weight: bold;
 }
 
-/* =========================
-   MOBILE UX (CRITICAL)
-   ========================= */
 @media (max-width: 768px) {
 
   body {
@@ -184,14 +147,13 @@ button:hover {
     margin-bottom: 16px;
   }
 
-  /* Mobile = vertical cards (no dense grid) */
   .grid {
     display: flex;
     flex-direction: column;
     gap: 12px;
-    max-height: 80vh;          /* set a viewport-based max height */
-    overflow-y: auto;          /* vertical scroll */
-    -webkit-overflow-scrolling: touch; /* smooth scrolling on iOS */
+    max-height: 80vh;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
     padding: 0;
     border: none;
     background: transparent;
@@ -217,7 +179,6 @@ button:hover {
     transform: scale(1.25);
   }
 
-  /* iOS zoom fix + better scroll */
   input[type="number"],
   select {
     width: 100%;
@@ -240,10 +201,8 @@ button:hover {
     padding: 16px;
     font-size: 15px;
   }
-  
 }
 
-/* Copy button */
 .copy-btn {
   border: none;
   background-color: transparent;
@@ -258,7 +217,6 @@ button:hover {
   transform: scale(1.1);
 }
 
-/* Toggle Buttons */
 .toggle-buttons {
   display: flex;
   gap: 10px;
@@ -276,13 +234,12 @@ button:hover {
 }
 
 .toggle.active {
-  background: #c55a11; /* burnt orange */
+  background: #c55a11;
   color: #f2d492;
   font-weight: bold;
   border-color: #c55a11;
 }
 
-/* Process Section */
 .process {
   display: none;
   padding: 15px;
@@ -296,29 +253,28 @@ button:hover {
 .process.active {
   display: block;
 }
-/* Scrollbar for WebKit browsers */
+
 .grid::-webkit-scrollbar {
   width: 12px;
 }
 
 .grid::-webkit-scrollbar-track {
-  background: #f0e2be; /* Pale beige from Ocean Sunset */
+  background: #f0e2be;
   border-radius: 14px;
 }
 
 .grid::-webkit-scrollbar-thumb {
-  background: #141414; /* Burnt orange */
+  background: #141414;
   border-radius: 14px;
-  border: 3px solid #f0e2be; /* Padding around thumb */
+  border: 3px solid #f0e2be;
   transition: background-color 0.3s ease;
 }
 
 .grid::-webkit-scrollbar-thumb:hover {
-  background: #e59221; /* Brighter orange */
+  background: #e59221;
 }
 
-/* Scrollbar for Firefox */
 .grid {
   scrollbar-width: thin;
-  scrollbar-color: #201a13 #f0e2be; /* thumb and track */
+  scrollbar-color: #201a13 #f0e2be;
 }
