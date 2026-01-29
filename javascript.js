@@ -1,5 +1,6 @@
 
 // Oils & Fragrances (Cold Process + Melt & Pour)
+
 const oils = [
   {name:"Olive Oil", sap:0.134, faceSafe:true}, 
   {name:"Coconut Oil", sap:0.183, faceSafe:false},
@@ -41,39 +42,39 @@ const fragrances = [
   "Myrrh","Tea","Coffee","Coconut","Chocolate","Strawberry","Apple","Mango","Peach","None"
 ];
 
-// Populate Cold Process oils
-const oilList = document.getElementById("oilList");
-oils.forEach((oil,i)=>{
-  let className = oil.faceSafe ? "face-safe" : "non-face-safe";
-  oilList.innerHTML += `<label class="${className}"><input type="checkbox" value="${i}"> ${oil.name}</label>`;
-});
- const name = document.getElementById("name1").value;
-// Populate Cold & Melt Fragrances
-const fragranceList = document.getElementById("fragranceList");
-const meltFragranceList = document.getElementById("meltFragranceList");
-fragrances.forEach((f,i)=>{
-  const html = `<label><input type="checkbox" value="${i}"> ${f}</label>`;
-  fragranceList.innerHTML += html;
-  meltFragranceList.innerHTML += html;
-});
 
-// Populate Melt & Pour Oils
-const meltOilListContainer = document.createElement('div');
-meltOilListContainer.className = 'grid';
-meltOilListContainer.id = 'meltOilList';
-document.querySelector('#melt .section:nth-of-type(2)').insertAdjacentHTML('beforeend','<h3>Select Oils (Optional)</h3>');
-document.querySelector('#melt .section:nth-of-type(2)').appendChild(meltOilListContainer);
+// Populate Oil & Fragrance Lists
 
-const meltOilList = document.getElementById("meltOilList");
-oils.forEach((oil,i)=>{
-  if(oil.faceSafe){ // only safe oils for Melt & Pour
-    meltOilList.innerHTML += `<label class="face-safe">
-      <input type="checkbox" value="${i}"> ${oil.name}
-    </label>`;
-  }
-});
+function populateLists() {
+  const oilList = document.getElementById("oilList");
+  const meltOilList = document.getElementById("meltOilList");
+  const fragranceList = document.getElementById("fragranceList");
+  const meltFragranceList = document.getElementById("meltFragranceList");
+
+  oils.forEach((oil,i)=>{
+    // Cold Process
+    let className = oil.faceSafe ? "face-safe" : "non-face-safe";
+    oilList.innerHTML += `<label class="${className}"><input type="checkbox" value="${i}"> ${oil.name}</label>`;
+
+    // Melt & Pour (only face-safe oils)
+    if(oil.faceSafe){
+      meltOilList.innerHTML += `<label class="face-safe"><input type="checkbox" value="${i}"> ${oil.name}</label>`;
+    }
+  });
+
+  fragrances.forEach((f,i)=>{
+    const html = `<label><input type="checkbox" value="${i}"> ${f}</label>`;
+    fragranceList.innerHTML += html;
+    meltFragranceList.innerHTML += html;
+  });
+}
+
+// Call populate on load
+populateLists();
+
 
 // Enforce face-safe oils for Cold Process
+
 document.querySelectorAll('input[name="soapType"]').forEach(radio=>{
   radio.addEventListener('change', ()=>{
     const soapType = document.querySelector('input[name="soapType"]:checked').value;
@@ -87,33 +88,17 @@ document.querySelectorAll('input[name="soapType"]').forEach(radio=>{
   });
 });
 
-// Dynamic Time Calculators
+
+// Time Estimators
+
 function estimateColdTime(amount, oilsSelected) {
-  // Trace time (depends on fast-trace oils)
   let fastTraceOils = oilsSelected.filter(i => ["Coconut Oil","Palm Oil","Palm Kernel Oil","Babassu Oil"].includes(oils[i].name));
-  let baseTrace = 20; // 20 min base
-  let trace = baseTrace - fastTraceOils.length * 5;
-  if(trace < 5) trace = 5;
-  trace *= amount/500; // scale with batch size
-
-  // Set time
-  let setTime = 24 + (amount/500)*12; // hours
-
-  // Cure time
-  let cureTime = 28 + (amount/500)*2; // days
-
+  let trace = Math.max(5, 20 - fastTraceOils.length * 5) * amount/500;
+  let setTime = 24 + (amount/500)*12;
+  let cureTime = 28 + (amount/500)*2;
   return {trace: Math.round(trace), set: Math.round(setTime), cure: Math.round(cureTime)};
 }
 
-function estimateMeltTime(amount) {
-  let melt = 0;
-  let cool = 0;
-  if(amount < 100){ melt = 1; cool = 10; }
-  else if(amount < 300){ melt = 2; cool = 15; }
-  else if(amount < 500){ melt = 3; cool = 20; }
-  else { melt = 5; cool = 30; }
-  return {melt: melt, cool: cool};
-}
 
 // Cold Process Calculator
 
@@ -150,13 +135,12 @@ function generate(){
   let fragranceText="", fragranceAmount = amount*fragrancePercent;
   if(selectedFragrances.length>0){
     const perF = fragranceAmount/selectedFragrances.length;
-    selectedFragrances.forEach(box=>{
-      fragranceText += `${fragrances[box.value]}: ${perF.toFixed(1)} g<br>`;
-    });
+    selectedFragrances.forEach(box=>fragranceText += `${fragrances[box.value]}: ${perF.toFixed(1)} g<br>`);
   } else fragranceText="None";
 
   const times = estimateColdTime(amount, selectedOils.map(b=>b.value));
- const name1 = document.getElementById("name1").value;
+  const name1 = document.getElementById("name1").value;
+
   document.getElementById("result").innerHTML=`
     <strong>Title Soap:</strong> ${name1}<br><br>
     <strong>Total Soap:</strong> ${amount.toFixed(1)} g<br><br>
@@ -191,33 +175,29 @@ function clearForm(){
   document.querySelectorAll('#oilList label').forEach(label=>label.style.display='block');
 }
 
+
 // Melt & Pour Calculator
 
 function generateMelt() {
   let amount = parseFloat(document.getElementById("meltAmount").value);
   const unit = document.getElementById("meltUnit").value;
   if (!amount || amount <= 0) return alert("Enter a valid soap base amount");
-
   if (unit === "kg") amount *= 1000;
   if (unit === "bar") amount *= 100;
 
   const soapType = document.querySelector('input[name="meltSoapType"]:checked').value;
-  const fragrancePercent = (soapType === 'face' || soapType === 'both') ? 0.01 : 0.02; // safe max 1% face, 2% body
+  const fragrancePercent = (soapType === 'face' || soapType === 'both') ? 0.01 : 0.02;
 
-  // Fragrance calculation
   const selectedFragrances = [...document.querySelectorAll('#meltFragranceList input:checked')];
   let fragranceText = "", fragranceAmount = amount * fragrancePercent;
   if (selectedFragrances.length > 0) {
     const perF = fragranceAmount / selectedFragrances.length;
-    selectedFragrances.forEach(box => {
-      fragranceText += `${fragrances[box.value]}: ${perF.toFixed(1)} g<br>`;
-    });
+    selectedFragrances.forEach(box => fragranceText += `${fragrances[box.value]}: ${perF.toFixed(1)} g<br>`);
   } else fragranceText = "None";
 
-  // Oils calculation
   const selectedOils = [...document.querySelectorAll('#meltOilList input:checked')];
   let oilText = "";
-  const oilPercent = 0.03; // 3% per oil
+  const oilPercent = 0.03;
   if (selectedOils.length > 0) {
     selectedOils.forEach(box => {
       const oil = oils[box.value];
@@ -226,40 +206,19 @@ function generateMelt() {
     });
   } else oilText = "None";
 
-  // Dynamic melt and cooling times
-  let meltTime = "";
-  let coolTime = "";
+  let meltTime = "", coolTime = "";
+  if (amount < 100) { meltTime = "20–30 sec per interval, total ~20–60 sec"; coolTime = "10–20 min"; }
+  else if (amount < 500) { meltTime = "30–60 sec per interval"; coolTime = "15–30 min"; }
+  else if (amount < 5000) { meltTime = "5–10 min (double boiler)"; coolTime = "30–60 min"; }
+  else if (amount < 50000) { meltTime = "15–30 min (double boiler, stir often)"; coolTime = "1–2 hours"; }
+  else if (amount < 500000) { meltTime = "30–60 min (industrial double boiler)"; coolTime = "2–4 hours"; }
+  else if (amount < 5000000) { meltTime = "1–3 hours (industrial setup)"; coolTime = "4–8 hours"; }
+  else if (amount < 50000000) { meltTime = "3–6 hours (industrial, stir continuously)"; coolTime = "8–24 hours"; }
+  else { meltTime = "⚠️ Extremely large batch, use specialized industrial equipment"; coolTime = "⚠️ Cooling time depends on equipment, could take 1+ days"; }
 
-  if (amount < 100) {           // tiny batch < 100 g
-    meltTime = "20–30 sec per interval, total ~20–60 sec";
-    coolTime = "10–20 min";
-  } else if (amount < 500) {    // small batch 100–500 g
-    meltTime = "30–60 sec per interval";
-    coolTime = "15–30 min";
-  } else if (amount < 5000) {   // 0.5–5 kg
-    meltTime = "5–10 min (double boiler)";
-    coolTime = "30–60 min";
-  } else if (amount < 50000) {  // 5–50 kg
-    meltTime = "15–30 min (double boiler, stir often)";
-    coolTime = "1–2 hours";
-  } else if (amount < 500000) { // 50–500 kg
-    meltTime = "30–60 min (industrial double boiler)";
-    coolTime = "2–4 hours";
-  } else if (amount < 5000000) { // 0.5–5 tons
-    meltTime = "1–3 hours (industrial setup)";
-    coolTime = "4–8 hours";
-  } else if (amount < 50000000) { // 5–50 tons
-    meltTime = "3–6 hours (industrial, stir continuously)";
-    coolTime = "8–24 hours";
-  } else {                       // >50 tons
-    meltTime = "⚠️ Extremely large batch, use specialized industrial equipment";
-    coolTime = "⚠️ Cooling time depends on equipment, could take 1+ days";
-  }
-
-  // Render results
   const name1 = document.getElementById("name1").value;
   document.getElementById("meltResult").innerHTML = `
-  <strong>Title Soap :</strong> ${name1} <br>
+    <strong>Title Soap :</strong> ${name1} <br>
     <strong>Total Soap Base:</strong> ${amount.toLocaleString()} g<br>
     <strong>Soap Type:</strong> ${soapType.charAt(0).toUpperCase() + soapType.slice(1)}<br>
     <strong>Add-in Oils (~3% each):</strong><br>${oilText}<br>
@@ -269,7 +228,6 @@ function generateMelt() {
     <em>Melt & Pour is already saponified</em>
   `;
 }
-
 
 function copyMeltResult() {
   const text = document.getElementById("meltResult").innerText;
@@ -289,10 +247,42 @@ function clearMeltForm() {
 }
 
 
-// Toggle Process
+// Toggle Process Tabs
+
 function showProcess(type,event){
   document.querySelectorAll(".process").forEach(p=>p.classList.remove("active"));
   document.querySelectorAll(".toggle").forEach(b=>b.classList.remove("active"));
   document.getElementById(type).classList.add("active");
   event.target.classList.add("active");
+}
+
+
+// Search Functions
+
+function searchColdOils() {
+  const query = document.getElementById("searchZZ").value.toLowerCase();
+  document.querySelectorAll('#oilList label').forEach(label=>{
+    label.style.display = label.textContent.toLowerCase().includes(query) ? 'block' : 'none';
+  });
+}
+
+function searchColdFragrances() {
+  const query = document.getElementById("searchInput2").value.toLowerCase();
+  document.querySelectorAll('#fragranceList label').forEach(label=>{
+    label.style.display = label.textContent.toLowerCase().includes(query) ? 'block' : 'none';
+  });
+}
+
+function searchMeltOils() {
+  const query = document.getElementById("searchZZMelt").value.toLowerCase();
+  document.querySelectorAll('#meltOilList label').forEach(label=>{
+    label.style.display = label.textContent.toLowerCase().includes(query) ? 'block' : 'none';
+  });
+}
+
+function searchMeltFragrances() {
+  const query = document.getElementById("searchInput2Melt").value.toLowerCase();
+  document.querySelectorAll('#meltFragranceList label').forEach(label=>{
+    label.style.display = label.textContent.toLowerCase().includes(query) ? 'block' : 'none';
+  });
 }
