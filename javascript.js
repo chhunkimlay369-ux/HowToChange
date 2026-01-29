@@ -1,6 +1,5 @@
-// -------------------------
+
 // Oils & Fragrances (Cold Process + Melt & Pour)
-// -------------------------
 const oils = [
   {name:"Olive Oil", sap:0.134, faceSafe:true}, 
   {name:"Coconut Oil", sap:0.183, faceSafe:false},
@@ -42,18 +41,14 @@ const fragrances = [
   "Myrrh","Tea","Coffee","Coconut","Chocolate","Strawberry","Apple","Mango","Peach","None"
 ];
 
-// -------------------------
 // Populate Cold Process oils
-// -------------------------
 const oilList = document.getElementById("oilList");
 oils.forEach((oil,i)=>{
   let className = oil.faceSafe ? "face-safe" : "non-face-safe";
   oilList.innerHTML += `<label class="${className}"><input type="checkbox" value="${i}"> ${oil.name}</label>`;
 });
  const name = document.getElementById("name1").value;
-// -------------------------
 // Populate Cold & Melt Fragrances
-// -------------------------
 const fragranceList = document.getElementById("fragranceList");
 const meltFragranceList = document.getElementById("meltFragranceList");
 fragrances.forEach((f,i)=>{
@@ -62,9 +57,7 @@ fragrances.forEach((f,i)=>{
   meltFragranceList.innerHTML += html;
 });
 
-// -------------------------
 // Populate Melt & Pour Oils
-// -------------------------
 const meltOilListContainer = document.createElement('div');
 meltOilListContainer.className = 'grid';
 meltOilListContainer.id = 'meltOilList';
@@ -80,9 +73,7 @@ oils.forEach((oil,i)=>{
   }
 });
 
-// -------------------------
 // Enforce face-safe oils for Cold Process
-// -------------------------
 document.querySelectorAll('input[name="soapType"]').forEach(radio=>{
   radio.addEventListener('change', ()=>{
     const soapType = document.querySelector('input[name="soapType"]:checked').value;
@@ -96,9 +87,7 @@ document.querySelectorAll('input[name="soapType"]').forEach(radio=>{
   });
 });
 
-// -------------------------
 // Dynamic Time Calculators
-// -------------------------
 function estimateColdTime(amount, oilsSelected) {
   // Trace time (depends on fast-trace oils)
   let fastTraceOils = oilsSelected.filter(i => ["Coconut Oil","Palm Oil","Palm Kernel Oil","Babassu Oil"].includes(oils[i].name));
@@ -126,9 +115,8 @@ function estimateMeltTime(amount) {
   return {melt: melt, cool: cool};
 }
 
-// -------------------------
 // Cold Process Calculator
-// -------------------------
+
 function generate(){
   let amount = parseFloat(document.getElementById("amount").value);
   const unit = document.getElementById("unit").value;
@@ -203,10 +191,8 @@ function clearForm(){
   document.querySelectorAll('#oilList label').forEach(label=>label.style.display='block');
 }
 
-
-// -------------------------
 // Melt & Pour Calculator
-// -------------------------
+
 function generateMelt() {
   let amount = parseFloat(document.getElementById("meltAmount").value);
   const unit = document.getElementById("meltUnit").value;
@@ -218,9 +204,7 @@ function generateMelt() {
   const soapType = document.querySelector('input[name="meltSoapType"]:checked').value;
   const fragrancePercent = (soapType === 'face' || soapType === 'both') ? 0.01 : 0.02; // safe max 1% face, 2% body
 
-  // -------------------------
   // Fragrance calculation
-  // -------------------------
   const selectedFragrances = [...document.querySelectorAll('#meltFragranceList input:checked')];
   let fragranceText = "", fragranceAmount = amount * fragrancePercent;
   if (selectedFragrances.length > 0) {
@@ -230,9 +214,7 @@ function generateMelt() {
     });
   } else fragranceText = "None";
 
-  // -------------------------
   // Oils calculation
-  // -------------------------
   const selectedOils = [...document.querySelectorAll('#meltOilList input:checked')];
   let oilText = "";
   const oilPercent = 0.03; // 3% per oil
@@ -244,9 +226,7 @@ function generateMelt() {
     });
   } else oilText = "None";
 
-  // -------------------------
   // Dynamic melt and cooling times
-  // -------------------------
   let meltTime = "";
   let coolTime = "";
 
@@ -276,9 +256,7 @@ function generateMelt() {
     coolTime = "⚠️ Cooling time depends on equipment, could take 1+ days";
   }
 
-  // -------------------------
   // Render results
-  // -------------------------
   const name1 = document.getElementById("name1").value;
   document.getElementById("meltResult").innerHTML = `
   <strong>Title Soap :</strong> ${name1} <br>
@@ -311,9 +289,7 @@ function clearMeltForm() {
 }
 
 
-// -------------------------
 // Toggle Process
-// -------------------------
 function showProcess(type,event){
   document.querySelectorAll(".process").forEach(p=>p.classList.remove("active"));
   document.querySelectorAll(".toggle").forEach(b=>b.classList.remove("active"));
