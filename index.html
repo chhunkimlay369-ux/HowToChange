@@ -1,160 +1,258 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Safe Soap Calculator</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Safe Soap Calculator</title>
+  <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-<div class="container">
-  <h1>🧼 Safe Soap Calculator</h1>
+  <div class="container">
+    <h1>🧼 Safe Soap Calculator</h1>
 
-  Name: <input type="text" id="name1" placeholder="Enter your name"><br>
-  
-  <!-- Toggle Buttons -->
-  <div class="toggle-buttons">
-    <button class="toggle active" onclick="showProcess('hot', event)">Hot Process</button>
-    <button class="toggle" onclick="showProcess('cold', event)">Cold Process</button>
-    <button class="toggle" onclick="showProcess('melt', event)">Melt & Pour</button>
-  </div>
+    Name: <input type="text" id="name1" placeholder="Enter your name"><br>
 
-  <div class="process-content">
-
-    <!-- Hot Process -->
-    <div id="hot" class="process active">
-      <h2>Hot Process</h2>
-      <p>????</p>
+    <!-- Toggle Buttons -->
+    <div class="toggle-buttons">
+      <button class="toggle active" onclick="showProcess('hot', event)">Hot Process</button>
+      <button class="toggle" onclick="showProcess('cold', event)">Cold Process</button>
+      <button class="toggle" onclick="showProcess('melt', event)">Melt & Pour</button>
     </div>
 
-    <!-- Cold Process -->
-    <div id="cold" class="process">
-      <div class="section">
-        <h2>Cold Process Soap Calculator</h2>
-        <h3>Enter Soap Amount</h3>
-         
-        soap : <input type="number" id="amount" placeholder="Example: 1"><br>
-        Unit : <select id="unit"><br>     
-          <option value="g">grams</option>
-          <option value="kg">kilograms</option>
-          <option value="bar">bars (1 bar = 100g)</option>
-        </select>
-        Search_oils: <input type="text" id="searchZZ" placeholder="Search oils " oninput="searchColdOils()" ><br>
-        Search_fragrances: <input type="text" id="searchInput2" placeholder="Search fragrances" oninput="searchColdFragrances()" ><br>
+    <div class="process-content">
 
+      <!-- Hot Process -->
+      <div id="hot" class="process active">
+        <h2>Hot Process</h2>
+        <p>Hot Process section coming soon!</p>
       </div>
 
-      <div class="section">
-        <h3>Select Soap Type</h3>
-        <label><input type="radio" name="soapType" value="face" checked> Face Soap</label>
-        <label><input type="radio" name="soapType" value="body"> Body Soap</label>
-        <label><input type="radio" name="soapType" value="both"> Face & Body Soap</label>
-      </div>
+      <!-- Cold Process -->
+      <div id="cold" class="process">
+        <div class="section">
+          <h2>Cold Process Soap Calculator</h2>
+          <h3>Enter Soap Amount</h3>
+          Soap: <input type="number" id="amount" placeholder="Example: 1"><br>
+          Unit:
+          <select id="unit">
+            <option value="g">grams</option>
+            <option value="kg">kilograms</option>
+            <option value="bar">bars (1 bar = 100g)</option>
+          </select><br>
+          Search Oils: <input type="text" id="searchZZ" placeholder="Search oils" oninput="searchColdOils()"><br>
+          Search Fragrance:<input type="text" id="searchInput2" placeholder="Search fragrances"
+            oninput="searchColdFragrances()"><br>
+          Search Powders:<input type="text" id="searchPowder" placeholder="Search powders"
+            oninput="searchColdPowders()"><br>
+        </div>
 
-      <div class="section">
-        <h3>Select Oils</h3>
-        <div class="grid-wrapper">
-          <div class="grid" id="oilList"></div>
+        <div class="section">
+          <h3>Select Soap Type</h3>
+          <label><input type="radio" name="soapType" value="face" checked> Face Soap</label>
+          <label><input type="radio" name="soapType" value="body"> Body Soap</label>
+          <label><input type="radio" name="soapType" value="both"> Face & Body Soap</label>
+        </div>
+
+        <div class="section">
+          <h3>Select Oils</h3>
+          <div class="grid-wrapper">
+            <div class="grid" id="oilList"></div>
+          </div>
+        </div>
+
+        <div class="section">
+          <h3>Select Fragrance(s)</h3>
+          <div class="grid-wrapper">
+            <div class="grid" id="fragranceList"></div>
+          </div>
+        </div>
+
+        <div class="section">
+          <h3>Select Powders</h3>
+          <div class="grid-wrapper">
+            <div class="grid" id="powderList"></div>
+          </div>
+        </div>
+
+        <div class="section button-row">
+          <button id="generateBtn" onclick="generate()">Generate Recipe</button>
+          <button id="clearBtn" onclick="clearForm()">Clear</button>
+        </div>
+
+        <div class="section">
+          <h3>
+            Essential Ingredients
+            <button class="copy-btn" onclick="copyResult()" title="Copy recipe">
+              <p id="btncopy"> 📋</p>
+            </button>
+          </h3>
+          <div class="result" id="result">No calculation yet.</div>
+        </div>
+
+        <div class="section warning">
+          ⚠️ Safety Rules:
+          <ul>
+            <li>Select at least one oil</li>
+            <li>Always wear gloves & goggles</li>
+            <li>Add lye to water, not water to lye</li>
+            <li>Test small batches first</li>
+            <h3>1. Cold Process Soap Basics</h3>
+            <p> CP soap is made by saponifying oils with lye (NaOH).
+              Lye is caustic and dangerous if handled improperly — can burn skin, eyes, and lungs if inhaled.
+              All percentages of oils, powders, and fragrance are calculated before saponification.</p>
+            <h3>2. Using Powders in Cold Process</h3>
+            <p> Powders like Beetroot or Carrot can be used as colorants or mild exfoliants, but CP is more reactive:
+              pH effect: Some powders are acidic (like beetroot) and can slightly change soap pH — usually minor.
+              Discoloration: Natural powders can darken or change color in CP soap because lye is highly alkaline.
+              Beetroot may turn brown or gray.
+              Carrot often turns more muted orange.
+              Gelling & trace: Powders can thicken the batter faster, especially at higher percentages.</p>
+            <h3>3. Safe Usage Guidelines in CP</h3>
+            <p> Percentage: 0.5–2% of total oils is safe for powders. You’re at 2% each, which is okay.
+              Mixing:
+              Pre-dissolve powders in a small amount of water, oil, or glycerin to make a slurry.
+              Add at light trace (when the batter is thickening but still pourable) — prevents clumping.
+              Fragrances/EOs:
+              Must be CP-safe at recommended rates (usually 1–3%).
+              Some essential oils can accelerate trace or change color.
+              Add-in oils:
+              Extra oils (like your sesame and walnut 3% each) are fine — they become “superfatting,” giving a more
+              moisturizing soap.</p>
+          </ul>
         </div>
       </div>
 
-      <div class="section">
-        <h3>Select Fragrance(s)</h3>
-        <div class="grid-wrapper">
-          <div class="grid" id="fragranceList"></div>
+      <!-- Melt & Pour -->
+      <div id="melt" class="process">
+        <h2>Melt & Pour Soap Calculator</h2>
+
+        <div class="section">
+          <h3>Enter Soap Base Amount</h3>
+          Amount: <input type="number" id="meltAmount" placeholder="Example: 100"><br>
+          Unit:
+          <select id="meltUnit">
+            <option value="g">grams</option>
+            <option value="kg">kilograms</option>
+            <option value="bar">bars (1 bar = 100g)</option>
+          </select><br>
+          Search Oils: <input type="text" id="searchZZMelt" placeholder="Search oils" oninput="searchMeltOils()"><br>
+          Search Fragrance:<input type="text" id="searchInput2Melt" placeholder="Search fragrances"
+            oninput="searchMeltFragrances()"><br>
+          Search Powders:<input type="text" id="searchPowderMelt" placeholder="Search powders"
+            oninput="searchMeltPowders()"><br>
+        </div>
+
+        <div class="section">
+          <h3>Select Soap Type</h3>
+          <label><input type="radio" name="meltSoapType" value="face" checked> Face Soap</label>
+          <label><input type="radio" name="meltSoapType" value="body"> Body Soap</label>
+          <label><input type="radio" name="meltSoapType" value="both"> Face & Body Soap</label>
+        </div>
+
+        <div class="section">
+          <h3>Select Oils (Optional)</h3>
+          <div class="grid" id="meltOilList"></div>
+        </div>
+
+        <div class="section">
+          <h3>Select Fragrances</h3>
+          <div class="grid" id="meltFragranceList"></div>
+        </div>
+
+        <div class="section">
+          <h3>Select Powders</h3>
+          <div class="grid" id="meltPowderList"></div>
+        </div>
+
+        <div class="section button-row">
+          <button id="generateMeltBtn" onclick="generateMelt()">Generate Recipe</button>
+          <button id="clearMeltBtn" onclick="clearMeltForm()">Clear</button>
+        </div>
+
+        <div class="section">
+          <h3>
+            Melt & Pour Ingredients
+            <button class="copy-btn" onclick="copyMeltResult()" title="Copy recipe">
+              <p id="meltBtnCopy"> 📋</p>
+            </button>
+          </h3>
+          <div class="result" id="meltResult">No calculation yet.</div>
+        </div>
+
+        <div class="section warning">
+          ⚠️ Safety Rules:
+          <ul>
+            <li>Keep oils ≤5% of base weight</li>
+            <li>Essential oils ≤1–2%</li>
+            <li>Face soap oils must be face-safe</li>
+            <li>Test small batches first</li>
+            <li>Use heat-safe container for melting</li>
+            <h3>How to Safely Use Powders in M&P Soap</h3>
+            <p> 1.Sift or grind powders before adding → ensures smooth texture.</p>
+            <p>2.Pre-mix powders in a small amount of melted soap base (slurry) or oils → prevents clumping.</p>
+            <p>3.Add gradually to melted soap while stirring continuously.</p>
+            <p>4.Keep total powder under ~5% of base → you’re at 4% (2% beetroot + 2% carrot), which is safe.</p>
+            <p>5.Avoid overheating powders → high heat can change color or reduce nutrients.</p>
+            <h3>1. Choose the Right Powder</h3>
+            <p>-Skin-safe, cosmetic or food-grade powders (like Beetroot, Carrot, Spirulina, or Kaolin clay) are best.
+            </p>
+            <p>-Avoid powders with unknown additives or strong allergens unless labeled clearly.</p>
+            <h3>2.Use Safe Percentages</h3>
+            <p>-General guideline: 1–3% of total soap weight.</p>
+            <p>-Your formula: Beetroot 2%, Carrot 2% → safe and within normal limits.</p>
+            <p>-Too much powder can make soap grainy or thick.</p>
+            <h3>Prepare the Powder</h3>
+            <p>-Sift powders to remove clumps.</p>
+            <p>-Optional: mix the powder with a small amount of oil (from your recipe) or a bit of melted soap base to
+            </p>
+            <p></p>-make a slurry → ensures even color.
+            <p></p>-Avoid adding directly as dry powder to hot soap — it can clump.
+            <h3>4.When to Add the Powder</h3>
+            <p>-After the soap base is fully melted.</p>
+            <p>-Add powders gradually while stirring gently but continuously.</p>
+            <p>-Avoid vigorous mixing — it can trap air bubbles.</p>
+            <h3>5. Temperature Considerations</h3>
+            <p>-Keep the melted base below 80–90°C (175–195°F).</p>
+            <p>-Excessive heat can:</p>
+            <p>-Burn the powder</p>
+            <p>-Alter color</p>
+            <p>-Affect fragrance</p>
+            <h3>6. Other Safety Tips</h3>
+            <p>-Work in a well-ventilated area, especially for fine powders — avoid inhaling dust.</p>
+            <p>-Use gloves to prevent staining skin.</p>
+            <p>-Label soap if using powders that are allergens or may stain skin (like beetroot).</p>
+            <p>-Store finished soap away from direct sunlight to preserve natural colors.</p>
+            <h3>Optional Enhancements</h3>
+            <p>-Swirl powders in a separate portion of melted base, then fold into the main batch — gives more even</p>
+            <p></p>-distribution and decorative effects.</p>
+            <p>-Combine powders with liquid colorants if you want brighter shades.</p>
+            <h2> When to Add the Powder?</h2>
+            <h3>After Fully Melting the Soap Base</h3>
+            <p> Make sure your soap base is completely melted and smooth.
+              Temperature should be moderate (around 60–70°C / 140–160°F).
+              If it’s too hot (>90°C / 195°F), powders can cook, darken, or clump.</p>
+            <h3> After Extra Oils</h3>
+            <p>If you’re adding extra oils (like your sesame and walnut 3% each), stir them in first.
+              This ensures your powder doesn’t stick to oil globules unevenly.</p>
+            <h3>Add Powder as a Slurry</h3>
+            <p>Mix your powder with a little melted base or oil to make a slurry.
+              Then stir this slurry gently into the melted base.</p>
+            <h3>Before Fragrance</h3>
+            <p> Powders should go in before adding fragrance:
+              Fragrance can affect the viscosity of the soap.
+              Stirring powders after fragrance may trap bubbles or cause uneven color.</P>
+          </ul>
         </div>
       </div>
 
-      <div class="section button-row">
-        <button id="generateBtn" onclick="generate()">Generate Recipe</button>
-        <button id="clearBtn" onclick="clearForm()">Clear</button>
-      </div>
-
-      <div class="section">
-        <h3>
-          Essential Ingredients
-          <button class="copy-btn" onclick="copyResult()" title="Copy recipe">
-            <p id="btncopy"> 📋</p>
-          </button>
-        </h3>
-        <div class="result" id="result">No calculation yet.</div>
-      </div>
-
-      <div class="section warning">
-        ⚠️ Safety Rules:
-        <ul>
-          <li>Select at least one oil</li>
-          <li>Always wear gloves & goggles</li>
-          <li>Add lye to water, not water to lye</li>
-          <li>Test small batches first</li>
-        </ul>
-      </div>
     </div>
 
-
-   <!-- Melt & Pour -->
-<div id="melt" class="process">
-  <h2>Melt & Pour Soap Calculator</h2>
-
-  <div class="section">
-    <h3>Enter Soap Base Amount</h3>
-    Amount: <input type="number" id="meltAmount" placeholder="Example: 100"><br>
-    Unit: <select id="meltUnit">
-      <option value="g">grams</option>
-      <option value="kg">kilograms</option>
-      <option value="bar">bars (1 bar = 100g)</option>
-    </select><br>
-    Search_oils: <input type="text" id="searchZZMelt" placeholder="Search oils" oninput="searchMeltOils()"><br>
-    Search_fragrances: <input type="text" id="searchInput2Melt" placeholder="Search fragrances" oninput="searchMeltFragrances()"><br>
   </div>
 
-  <div class="section">
-    <h3>Select Soap Type</h3>
-    <label><input type="radio" name="meltSoapType" value="face" checked> Face Soap</label>
-    <label><input type="radio" name="meltSoapType" value="body"> Body Soap</label>
-    <label><input type="radio" name="meltSoapType" value="both"> Face & Body Soap</label>
-  </div>
-
-  <div class="section">
-    <h3>Select Oils (Optional)</h3>
-    <div class="grid" id="meltOilList"></div>
-  </div>
-
-  <div class="section">
-    <h3>Select Fragrances</h3>
-    <div class="grid" id="meltFragranceList"></div>
-  </div>
-
-  <div class="section button-row">
-    <button id="generateMeltBtn" onclick="generateMelt()">Generate Recipe</button>
-    <button id="clearMeltBtn" onclick="clearMeltForm()">Clear</button>
-  </div>
-
-  <div class="section">
-    <h3>
-      Melt & Pour Ingredients
-      <button class="copy-btn" onclick="copyMeltResult()" title="Copy recipe">
-        <p id="meltBtnCopy"> 📋</p>
-      </button>
-    </h3>
-    <div class="result" id="meltResult">No calculation yet.</div>
-  </div>
-
-  <div class="section warning">
-    ⚠️ Safety Rules:
-    <ul>
-      <li>Keep oils ≤5% of base weight</li>
-      <li>Essential oils ≤1–2%</li>
-      <li>Face soap oils must be face-safe</li>
-      <li>Test small batches first</li>
-      <li>Use heat-safe container for melting</li>
-    </ul>
-  </div>
-</div>
-
-</div>
-
-<script src="javascript.js"></script>
+  <script src="javascript.js"></script>
 </body>
+
 </html>
