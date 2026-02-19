@@ -35,7 +35,13 @@ const oils = [
   { name: "Galanga Oil", sap: 0.125, faceSafe: false }
 ];
 
-
+const Ingredients = [{
+    name: "honey",
+}];
+const name_meltOilList1 = document.getElementById("meltOilList1");
+const label = `<label class="face-safe">
+                 <input type="checkbox" value="0"> Honey — <em>Safe for Face & Body</em>
+               </label>`;
 const fragrances = [
   // Face-safe
   { name: "Lavender", level: "face" }, { name: "Rose", level: "face" }, { name: "Chamomile", level: "face" },
@@ -69,7 +75,8 @@ const powders = [
   { name: "Cassava Powder", faceSafe: true, bodySafe: true },
   { name: "Sweet Potato Powder", faceSafe: true, bodySafe: true },
   { name: "Ube Powder", faceSafe: true, bodySafe: true },
-  { name: "Taro Powder", faceSafe: true, bodySafe: true }
+  { name: "Taro Powder", faceSafe: true, bodySafe: true },
+  { name: "Celery Powder", faceSafe: true, bodySafe: true }
 ];
 
 // ===== Populate Oil, Fragrance & Powder Lists =====
@@ -379,5 +386,6 @@ function searchColdOils() { const query = document.getElementById("searchZZ").va
 function searchColdFragrances() { const query = document.getElementById("searchInput2").value.toLowerCase(); document.querySelectorAll('#fragranceList label').forEach(label => { label.style.display = label.textContent.toLowerCase().includes(query) ? 'block' : 'none'; }); }
 function searchMeltOils() { const query = document.getElementById("searchZZMelt").value.toLowerCase(); document.querySelectorAll('#meltOilList label').forEach(label => { label.style.display = label.textContent.toLowerCase().includes(query) ? 'block' : 'none'; }); }
 function searchMeltFragrances() { const query = document.getElementById("searchInput2Melt").value.toLowerCase(); document.querySelectorAll('#meltFragranceList label').forEach(label => { label.style.display = label.textContent.toLowerCase().includes(query) ? 'block' : 'none'; }); }
+
 
 
